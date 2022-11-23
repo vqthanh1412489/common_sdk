@@ -1,5 +1,5 @@
 /// Support parse functions.
-class ParseFunc {
+class ParseFuncs {
   /// Parses a dynamic into a [int].
   static bool parseIntToBool(dynamic value) {
     if (value is int) {

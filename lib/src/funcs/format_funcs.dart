@@ -1,3 +1,4 @@
+import 'package:common_sdk/src/funcs/funcs.dart';
 import 'package:intl/intl.dart';
 
 /// Format data
@@ -42,7 +43,7 @@ class FormatFuncs {
     final dayOfWeek = DateFormat('EEEE').format(dateTime);
     final monthOfYear = DateFormat('MMM').format(dateTime);
 
-    final difference = daysBetween(dateTime, DateTime.now().toLocal());
+    final difference = ToolFuncs.daysBetween(dateTime, DateTime.now().toLocal());
 
     if (difference == 0) {
       result += "Hôm nay ${DateFormat('HH:mm').format(dateTime)}";
@@ -121,10 +122,18 @@ class FormatFuncs {
     return result;
   }
 
-  /// Caculae days between two date time
-  static int daysBetween(DateTime from, DateTime to) {
-    final f = DateTime(from.year, from.month, from.day);
-    final t = DateTime(to.year, to.month, to.day);
-    return (t.difference(f).inHours / 24).round();
+  /// Format date time with full natural language
+  String formatFullDateTime(DateTime dt) {
+    var result = '';
+    const local = 'vi-VN';
+
+    result += DateFormat('HH:mm, ', local).format(dt);
+    result += 'ngày ';
+    result += DateFormat('d ', local).format(dt);
+    result += 'thg ';
+    result += DateFormat('M, ', local).format(dt);
+    result += DateFormat('y', local).format(dt);
+
+    return result;
   }
 }
