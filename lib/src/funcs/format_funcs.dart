@@ -12,10 +12,12 @@ class FormatFuncs {
         return result;
       }
       if (phone.length >= 10) {
-        result = '${phone.substring(0, 4)}.${phone.substring(4, 7)}.${phone.substring(7, phone.length)}';
+        result =
+            '${phone.substring(0, 4)}.${phone.substring(4, 7)}.${phone.substring(7, phone.length)}';
       }
       return result;
     } catch (e) {
+      logApp(e.toString(), LogEnum.error, 'FormatFuncs.splitPhoneNumber');
       return '';
     }
   }
@@ -27,23 +29,27 @@ class FormatFuncs {
         if (price <= 0) {
           return 'Free';
         }
-        return NumberFormat.simpleCurrency(locale: 'vi', decimalDigits: 0).format(price * 1000);
+        return NumberFormat.simpleCurrency(locale: 'vi', decimalDigits: 0)
+            .format(price * 1000);
       }
       return '';
     } catch (e) {
+      logApp(e.toString(), LogEnum.error, 'FormatFuncs.formatPrice');
       return '';
     }
   }
 
   /// Format date time with natural language
-  static String formatDateNatural(DateTime dateTimeUTC, {String splitCharacter = ' - '}) {
+  static String formatDateNatural(DateTime dateTimeUTC,
+      {String splitCharacter = ' - '}) {
     final dateTime = dateTimeUTC.toLocal();
     var result = '';
 
     final dayOfWeek = DateFormat('EEEE').format(dateTime);
     final monthOfYear = DateFormat('MMM').format(dateTime);
 
-    final difference = ToolFuncs.daysBetween(dateTime, DateTime.now().toLocal());
+    final difference =
+        ToolFuncs.daysBetween(dateTime, DateTime.now().toLocal());
 
     if (difference == 0) {
       result += "Hôm nay ${DateFormat('HH:mm').format(dateTime)}";
@@ -123,7 +129,7 @@ class FormatFuncs {
   }
 
   /// Format date time with full natural language
-  String formatFullDateTime(DateTime dt) {
+  static String formatFullDateTime(DateTime dt) {
     var result = '';
     const local = 'vi-VN';
 
@@ -135,5 +141,20 @@ class FormatFuncs {
     result += DateFormat('y', local).format(dt);
 
     return result;
+  }
+
+  /// Format string to double with 6 decimal places
+  /// Example: 1.2345678998674924 -> 1.234567
+  double stringToDecimal6(String? str) {
+    try {
+      if (str != null) {
+        final r = double.parse(str);
+        return double.parse(r.toStringAsFixed(6));
+      }
+      return 60;
+    } catch (e) {
+      logApp(e.toString(), LogEnum.error, 'FormatFuncs.stringToDecimal6');
+      return 60;
+    }
   }
 }

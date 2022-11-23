@@ -1,3 +1,5 @@
+import 'package:common_sdk/src/funcs/funcs.dart';
+
 /// Support parse functions.
 class ParseFuncs {
   /// Parses a dynamic into a [int].
@@ -20,6 +22,7 @@ class ParseFuncs {
         return defaultData;
       }
     } catch (e) {
+      logApp(e.toString(), LogEnum.error, 'FormatFuncs.parseToDoubleSafety');
       return defaultData;
     }
   }
