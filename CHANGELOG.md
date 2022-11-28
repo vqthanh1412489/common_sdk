@@ -21,3 +21,12 @@
 # 0.1.0+6
 
 - Add stringToDecimal6 func
+# 0.1.0+7
+
+- Add compareStringVietnamese func
+- Add parseToDateTimeSafety func    
+- Add removeDiacritics func
+- Add formatTotalOrder func
+# 0.1.0+8
+
+- Add static

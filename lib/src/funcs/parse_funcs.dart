@@ -26,4 +26,18 @@ class ParseFuncs {
       return defaultData;
     }
   }
+
+  /// Parses a dynamic into a [DateTime] with default data is [DateTime.now()].
+  static DateTime parseToDateTimeSafety(dynamic data) {
+    try {
+      if (data != null) {
+        return DateTime.parse(data.toString());
+      } else {
+        return DateTime.now();
+      }
+    } catch (e) {
+      logApp(e.toString(), LogEnum.error, 'FormatFuncs.parseToDateTimeSafety');
+      return DateTime.now();
+    }
+  }
 }

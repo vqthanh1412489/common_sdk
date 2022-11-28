@@ -12,8 +12,7 @@ class FormatFuncs {
         return result;
       }
       if (phone.length >= 10) {
-        result =
-            '${phone.substring(0, 4)}.${phone.substring(4, 7)}.${phone.substring(7, phone.length)}';
+        result = '${phone.substring(0, 4)}.${phone.substring(4, 7)}.${phone.substring(7, phone.length)}';
       }
       return result;
     } catch (e) {
@@ -29,8 +28,7 @@ class FormatFuncs {
         if (price <= 0) {
           return 'Free';
         }
-        return NumberFormat.simpleCurrency(locale: 'vi', decimalDigits: 0)
-            .format(price * 1000);
+        return NumberFormat.simpleCurrency(locale: 'vi', decimalDigits: 0).format(price * 1000);
       }
       return '';
     } catch (e) {
@@ -40,16 +38,14 @@ class FormatFuncs {
   }
 
   /// Format date time with natural language
-  static String formatDateNatural(DateTime dateTimeUTC,
-      {String splitCharacter = ' - '}) {
+  static String formatDateNatural(DateTime dateTimeUTC, {String splitCharacter = ' - '}) {
     final dateTime = dateTimeUTC.toLocal();
     var result = '';
 
     final dayOfWeek = DateFormat('EEEE').format(dateTime);
     final monthOfYear = DateFormat('MMM').format(dateTime);
 
-    final difference =
-        ToolFuncs.daysBetween(dateTime, DateTime.now().toLocal());
+    final difference = ToolFuncs.daysBetween(dateTime, DateTime.now().toLocal());
 
     if (difference == 0) {
       result += "Hôm nay ${DateFormat('HH:mm').format(dateTime)}";
@@ -145,7 +141,7 @@ class FormatFuncs {
 
   /// Format string to double with 6 decimal places
   /// Example: 1.2345678998674924 -> 1.234567
-  double stringToDecimal6(String? str) {
+  static double stringToDecimal6(String? str) {
     try {
       if (str != null) {
         final r = double.parse(str);
@@ -155,6 +151,25 @@ class FormatFuncs {
     } catch (e) {
       logApp(e.toString(), LogEnum.error, 'FormatFuncs.stringToDecimal6');
       return 60;
+    }
+  }
+
+  /// Format number with k, m, b
+  /// Example: 1234 -> 1k2
+  /// Example: 1234567 -> 1m2k3
+  /// Example: 1234567890 -> 1b2m3k4
+  static String formatTotalOrder(int? totalOrder) {
+    try {
+      if (totalOrder == null) {
+        return '0';
+      }
+      if (totalOrder > 999) {
+        return '${(totalOrder / 1000).toStringAsFixed(1)}k+';
+      }
+      return '$totalOrder+';
+    } catch (e) {
+      logApp(e.toString(), LogEnum.error, 'FormatFuncs.formatTotalOrder');
+      return '0';
     }
   }
 }

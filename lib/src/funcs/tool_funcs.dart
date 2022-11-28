@@ -66,4 +66,31 @@ class ToolFuncs {
       return file;
     }
   }
+
+  /// Compare string is the contain of
+  /// Input [query] and [origin] is string source
+  /// Output is [bool] is contain or not
+  static bool compareStringVietnamese(String query, String origin) {
+    final s = query.toLowerCase();
+    final o = origin.toLowerCase();
+
+    if (s.contains(RegExp(r'[áàãảạăắằẵẳặâấầẫẩậéèẽẻẹêếềễễệíìĩỉịóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựýỳỹỷỵ]'))) {
+      return o.contains(s);
+    } else {
+      return removeDiacritics(o).contains(removeDiacritics(s));
+    }
+  }
+
+  /// Remove diacritics
+  /// Input is [String]
+  /// Output is [String] was removed diacritics
+  static String removeDiacritics(String str) {
+    const withDia = 'áàãảạăắằẵẳặâấầẫẩậéèẽẻẹêếềễễệíìĩỉịóòõỏọôốồỗổộơớờỡởợúùũủụưứừữửựýỳỹỷỵđ';
+    const withoutDia = 'aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd';
+    var result = str;
+    for (var i = 0; i < withDia.length; i++) {
+      result = result.replaceAll(withDia[i], withoutDia[i]);
+    }
+    return result;
+  }
 }

@@ -1,7 +1,7 @@
 name: common_sdk
-description: Common funcs, widgets...
+description: Common funcs, widgets and utils for Flutter apps and packages development.
 homepage: https://bloclibrary.dev/#/?id=sponsors
-version: 0.1.0+6
+version: 0.1.0+8
 # publish_to: none
 
 environment:
